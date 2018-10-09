@@ -1,6 +1,7 @@
 compare:
   output: /home/cristiroma/Work/iucn-whp/test.visual.3/shots
-  compare_bin: /usr/bin/compare
+  compare_binary: /usr/bin/compare
+  keep_identical_diff: False
   url:
     prod: https://www.worldheritageoutlook.iucn.org
     test: https://iucn-who.edw.ro

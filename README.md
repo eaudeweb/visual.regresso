@@ -23,3 +23,8 @@ DEBUG_LEVEL=DEBUG node index.js compare
 ```
 DEBUG_LEVEL=DEBUG node index.js history
 ```
+
+
+# References
+
+`compare` tool parameters - https://imagemagick.org/script/compare.php

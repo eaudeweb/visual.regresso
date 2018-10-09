@@ -5,7 +5,8 @@ const sprintfjs = require('sprintf-js');
 const sprintf = sprintfjs.sprintf;
 
 (async () => {
-  const log = new Log('main')
+  var exit_code = 0;
+  const log = new Log('main');
   var command = null;
   if (process.argv[2]) {
     command = process.argv[2];
@@ -81,10 +82,40 @@ const sprintf = sprintfjs.sprintf;
       await browser.close();
 
       const { spawnSync} = require('child_process');
+
+      log.debug('%s: Removing existing DIFF image %s', key, ob.diff_image);
+      const child_rm = spawnSync('rm', ['-f', ob.diff_image]);
+
       log.debug('%s: Creating DIFF image %s', key, ob.diff_image);
-      const child_rm = spawnSync('rm', [ob.diff_image]);
-      log.debug(config.compare.compare_bin + ' ' + ob.prod_image + ' ' + ob.test_image + ' ' + '-highlight-color red ' +  ob.diff_image);
-      const child_compare = spawnSync(config.compare.compare_bin, [ob.prod_image, ob.test_image, '-highlight-color', 'red', ob.diff_image]);
+      log.debug(key + ': Command: ' + config.compare.compare_binary + ' -metric AE -fuzz 10% -highlight-color red ' + ob.prod_image + ' ' + ob.test_image + ' ' + ob.diff_image);
+      const child_compare = spawnSync(config.compare.compare_binary,
+        [
+          '-metric', 'AE',
+          '-fuzz', '10%',
+          '-highlight-color', 'red',
+          ob.prod_image,
+          ob.test_image,
+          ob.diff_image
+        ]
+      );
+      if (child_compare.status == 0) {
+        if (!config.compare.keep_identical_diff) {
+          log.debug('%s: Files are identical, deleting diff %s', key, ob.diff_image);
+          spawnSync('rm', ['-f', ob.diff_image]);
+        }
+      }
+      else if (child_compare.status == 1) {
+        // Files are different, set global error flag
+        if (exit_code == 0) {
+          exit_code = -1;
+        }
+      }
+      else {
+        // Error - could not generate diff image, set global error flag
+        if (exit_code == 0) {
+          exit_code = -2;
+        }
+      }
       log.info('Finished: %s', key);
     }
   }
@@ -127,6 +158,7 @@ const sprintf = sprintfjs.sprintf;
       await page.screenshot({path: ob.prod_image});
       await browser.close();
     }
-    log.info('Done');
   }
+  log.info('Done with exit code: ' + exit_code);
+  process.exit(exit_code);
 })();
