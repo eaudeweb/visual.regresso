@@ -28,7 +28,7 @@ const sprintf = sprintfjs.sprintf;
         "test_url": test_site + path,
         "prod_image": config.compare.output + '/' + key + '_prod.png',
         "test_image": config.compare.output + '/' + key + '_test.png',
-        "diff_image": config.compare.output + '/' + key + '_diff.png',
+        "diff_image": config.compare.output + '/diff/' + key + '_diff.png',
       });
     });
 
