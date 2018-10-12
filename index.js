@@ -93,7 +93,8 @@ const path = require('path');
       const child_rm = spawnSync('rm', ['-f', ob.diff_image]);
 
       log.debug('%s: Creating DIFF image %s', key, ob.diff_image);
-      log.debug(key + ': Command: ' + config.compare.compare_binary + ' -metric AE -fuzz 10% -highlight-color red ' + ob.prod_image + ' ' + ob.test_image + ' ' + ob.diff_image);
+      var diff_command = config.compare.compare_binary + ' -metric AE -fuzz 10% -highlight-color red ' + ob.prod_image + ' ' + ob.test_image + ' ' + ob.diff_image;
+      log.debug(key + ': Command: ' + diff_command);
       const child_compare = spawnSync(config.compare.compare_binary,
         [
           '-metric', 'AE',
@@ -112,12 +113,14 @@ const path = require('path');
       }
       else if (child_compare.status == 1) {
         // Files are different, set global error flag
+        log.warn('%s has differences, check: %s and %s, diff: %s', key, ob.test_url, ob.prod_url, ob.diff_image);
         if (exit_code == 0) {
           exit_code = -1;
         }
       }
       else {
         // Error - could not generate diff image, set global error flag
+        log.error('%s ImageMagick compare has failed. Check error by running: %s', key, diff_command);
         if (exit_code == 0) {
           exit_code = -2;
         }
