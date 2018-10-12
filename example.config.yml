@@ -1,5 +1,5 @@
 compare:
-  output: /home/cristiroma/Work/iucn-whp/test.visual.3/shots
+  output: shots
   compare_binary: /usr/bin/compare
   keep_identical_diff: False
   url:

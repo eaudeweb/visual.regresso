@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 const Log = require('debug-level');
 const sprintfjs = require('sprintf-js');
 const sprintf = sprintfjs.sprintf;
+const path = require('path');
 
 (async () => {
   var exit_code = 0;
@@ -18,7 +19,12 @@ const sprintf = sprintfjs.sprintf;
   var config = readYaml.sync('config.yml');
   log.info('Executing command: ' + command);
 
+  var rootDir = path.dirname(require.main.filename);
   if (command == 'compare') {
+    var outputDir = rootDir + '/' + config.compare.output;
+    if (config.compare.output[0] == '/') {
+      outputDir = config.compare.output;
+    }
     var items = new Map();
     Object.keys(config.compare.links).forEach(function(key) {
       var path = config.compare.links[key];
@@ -27,9 +33,9 @@ const sprintf = sprintfjs.sprintf;
       items.set(key, {
         "prod_url": prod_site + path,
         "test_url": test_site + path,
-        "prod_image": config.compare.output + '/' + key + '_prod.png',
-        "test_image": config.compare.output + '/' + key + '_test.png',
-        "diff_image": config.compare.output + '/diff/' + key + '_diff.png',
+        "prod_image": outputDir + '/' + key + '_prod.png',
+        "test_image": outputDir + '/' + key + '_test.png',
+        "diff_image": outputDir + '/diff/' + key + '_diff.png',
       });
     });
 
@@ -121,13 +127,17 @@ const sprintf = sprintfjs.sprintf;
   }
 
   if (command == 'history') {
+    var outputDir = rootDir + '/' + config.history.output;
+    if (config.history.output[0] == '/') {
+      outputDir = config.history.output;
+    }
     var items = new Map();
     Object.keys(config.history.links).forEach(function(key) {
       var path = config.history.links[key];
       var prod_site = config.history.url;
       items.set(key, {
         "prod_url": prod_site + path,
-        "prod_image": config.history.output + '/' + key + '.png',
+        "prod_image": outputDir + '/' + key + '.png',
       });
     });
 
