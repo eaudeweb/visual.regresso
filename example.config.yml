@@ -2,13 +2,21 @@ compare:
   output: shots
   compare_binary: /usr/bin/compare
   keep_identical_diff: False
+  screen_size:
+    - "1300x3000"
   url:
     prod: https://www.worldheritageoutlook.iucn.org
     test: https://iucn-who.edw.ro
   links:
-    homepage: /
-    site_191: /explore-sites/wdpaid/191
-    site_197: /explore-sites/wdpaid/197
+    explore_sites: /explore-sites
+    homepage:
+      path: /
+      screen_size:
+        - "1280x1024"
+    site_191:
+      path: /explore-sites/wdpaid/191
+      screen_size:
+        - "1280x14000"
 
 history:
   output: history
