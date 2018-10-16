@@ -75,7 +75,7 @@ const path = require('path');
 
       var page = await browser.newPage();
       page.setViewport({width: screen_width, height: screen_height});
-      log.debug('%s: Getting TEST screenshot (%dx%d) %s to %s', key, screen_width, screen_height, ob.prod_url, ob.test_image);
+      log.debug('%s: Getting TEST screenshot (%dx%d) %s to %s', key, screen_width, screen_height, ob.test_url, ob.test_image);
 
       await page.goto(ob.test_url);
 
