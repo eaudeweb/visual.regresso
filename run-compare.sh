@@ -6,4 +6,3 @@ if [ "$node" == "" ]; then
 	exit -1
 fi
 DEBUG_LEVEL=INFO node index.js compare
-

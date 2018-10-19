@@ -1,23 +1,22 @@
 {
-  "name": "visual.regression",
+  "name": "visual.regresso",
   "version": "1.0.0",
   "description": "A tool that takes screenshots of production/test websites and output diff images. Also takes historical screenshots. Inspired by Wraith",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "BSD-3-Clause",
+  "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "author": "Cristian Romanescu <cristian.romanescu@eaudeweb.ro>",
-  "version": "0.0.1",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/eaudeweb/visual.regresso.git"
   },
   "dependencies": {
+    "debug-level": "0.3.0",
+    "fs": "0.0.1-security",
     "puppeteer": "1.9.0",
-    "read-yaml": "1.1.0",
-    "debug-level": "0.3.0"
+    "read-yaml": "1.1.0"
   }
 }

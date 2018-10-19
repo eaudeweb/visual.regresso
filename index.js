@@ -4,6 +4,7 @@ const Log = require('debug-level');
 const sprintfjs = require('sprintf-js');
 const sprintf = sprintfjs.sprintf;
 const path = require('path');
+const fs = require('fs');
 
 (async () => {
   var exit_code = 0, command = null, log = new Log('main');
@@ -59,17 +60,12 @@ const path = require('path');
 
       await page.goto(ob.prod_url);
 
-      /******************************************************************/
-      // Do some clicking to expand all page before screenshot
-      if (element = await page.$('a[href="#full-assessment"]')) {
-        await element.click();
-        await page.waitFor(500);
+      // Execute code before taking the screenshot
+      if(fs.existsSync('./scripts/preScreenshot.js')) {
+        log.debug('Found ./scripts/preScreenshot.js, invoking execute()');
+        var preScreenshot = require('./scripts/preScreenshot.js');
+        await preScreenshot.execute(key, page);
       }
-      if (element = await page.$('.expand-button')) {
-        await element.click();
-        await page.waitFor(1000);
-      }
-      /******************************************************************/
 
       await page.screenshot({path: ob.prod_image});
 
@@ -79,17 +75,13 @@ const path = require('path');
 
       await page.goto(ob.test_url);
 
-      /******************************************************************/
-      // Do some clicking to expand all page before screenshot
-      if (element = await page.$('a[href="#full-assessment"]')) {
-        await element.click();
-        await page.waitFor(500);
+      // Execute code before taking the screenshot
+      if(fs.existsSync('./scripts/preScreenshot.js')) {
+        log.debug('Found ./scripts/preScreenshot.js, invoking execute()');
+        var preScreenshot = require('./scripts/preScreenshot.js');
+        await preScreenshot.execute(key, page);
       }
-      if (element = await page.$('.expand-button')) {
-        await element.click();
-        await page.waitFor(1000);
-      }
-      /******************************************************************/
+
       await page.screenshot({path: ob.test_image});
       await browser.close();
 
