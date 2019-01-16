@@ -10,9 +10,9 @@ npm i
 (sudo) npm link
 ```
 
-In your project, copy `visual.regresso.starterkit` to `visual.regresso` and rename all `.example` files.
+Copy the folder `visual.regresso.starterkit` into your project, rename it as preferred and navigate into it.
 
-Copy `config.example.yml` to `config.yml` and customize if necessary.
+Copy `config.example.yml` to `config.yml` and customize as necessary.
 
 # Usage
 
@@ -29,9 +29,9 @@ DEBUG_LEVEL=INFO visual-regresso history
 ```
 
 
-**Note:** Use `DEBUG_LEVE=DEBUG` for debugging problems.
+**Note:** Use `DEBUG_LEVEL=DEBUG` for debugging problems.
 
-# Executing code before taking a screenshot
+## Executing code before taking a screenshot
 
 - Copy `scripts/preScreenshot.example.js` to `scripts/preScreenshot.js` and add your custom interaction code into `execute(id, page)` function.
 
