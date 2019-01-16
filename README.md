@@ -7,7 +7,7 @@ Install node (>= 8.10.0) and npm (>= 3.5.2).
 ```
 git checkout project
 npm i
-npm link
+(sudo) npm link
 ```
 
 In your project, copy `.visual.regresso.starterkit` to `.visual.regresso` and rename all `.example` files.
