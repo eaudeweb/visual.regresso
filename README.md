@@ -10,7 +10,7 @@ npm i
 (sudo) npm link
 ```
 
-In your project, copy `.visual.regresso.starterkit` to `.visual.regresso` and rename all `.example` files.
+In your project, copy `visual.regresso.starterkit` to `visual.regresso` and rename all `.example` files.
 
 Copy `config.example.yml` to `config.yml` and customize if necessary.
 
