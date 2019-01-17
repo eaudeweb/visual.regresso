@@ -132,7 +132,7 @@ const fs = require('fs');
   if (command == 'history') {
     var outputDir = rootDir + '/' + config.history.output;
     if (config.history.output[0] == '/') {
-      outputDir = config.history.output;
+      outputDir = '.' + config.history.output;
     }
     var items = new Map();
     Object.keys(config.history.links).forEach(function(key) {
