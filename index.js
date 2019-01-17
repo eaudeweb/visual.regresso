@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const readYaml = require('read-yaml');
 const puppeteer = require('puppeteer');
 const Log = require('debug-level');
@@ -27,7 +29,7 @@ const fs = require('fs');
   if (command == 'compare') {
     var outputDir = rootDir + '/' + config.compare.output;
     if (config.compare.output[0] == '/') {
-      outputDir = config.compare.output;
+      outputDir = '.' + config.compare.output;
     }
     var items = new Map();
     Object.keys(config.compare.links).forEach(function(key) {
@@ -56,7 +58,7 @@ const fs = require('fs');
       const browser = await puppeteer.launch();
       var page = await browser.newPage();
       page.setViewport({width: screen_width, height: screen_height});
-      log.debug('%s: Getting PROD screenshot (%dx%d) %sf to %s ', key, screen_width, screen_height, ob.prod_url, ob.prod_image);
+      log.debug('%s: Getting PROD screenshot (%dx%d) %s to %s ', key, screen_width, screen_height, ob.prod_url, ob.prod_image);
 
       await page.goto(ob.prod_url);
 
