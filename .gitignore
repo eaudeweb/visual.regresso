@@ -4,3 +4,4 @@ config.yml
 node_modules/
 history
 scripts/preScreenshot.js
+.DS_Store
