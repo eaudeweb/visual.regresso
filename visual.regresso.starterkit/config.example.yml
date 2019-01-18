@@ -1,6 +1,8 @@
 compare:
   # Output dir, absolute or relative to current dir
   output: shots
+  # Scripts dir, absolute or relative to current dir
+  scripts: scripts
   # Path to binary compare from ImageMagick package
   compare_binary: /usr/bin/compare
   keep_identical_diff: False

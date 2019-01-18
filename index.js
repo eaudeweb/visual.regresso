@@ -29,7 +29,7 @@ const fs = require('fs');
   if (command == 'compare') {
     var outputDir = rootDir + '/' + config.compare.output;
     if (config.compare.output[0] == '/') {
-      outputDir = '.' + config.compare.output;
+      outputDir = process.cwd() + config.compare.output;
     }
     var items = new Map();
     Object.keys(config.compare.links).forEach(function(key) {
@@ -62,10 +62,16 @@ const fs = require('fs');
 
       await page.goto(ob.prod_url);
 
+      var scriptsDir = rootDir + '/' + config.compare.scripts;
+      if (config.compare.scripts[0] == '/') {
+        scriptsDir =  process.cwd() + config.compare.scripts;
+      }
+      var preScreenshotPath = scriptsDir + '/preScreenshot.js';
+
       // Execute code before taking the screenshot
-      if(fs.existsSync('./scripts/preScreenshot.js')) {
-        log.debug('Found ./scripts/preScreenshot.js, invoking execute()');
-        var preScreenshot = require('./scripts/preScreenshot.js');
+      if(fs.existsSync(preScreenshotPath)) {
+        log.debug('Found ' + preScreenshotPath + ', invoking execute()');
+        var preScreenshot = require(preScreenshotPath);
         await preScreenshot.execute(key, page);
       }
 
@@ -78,9 +84,9 @@ const fs = require('fs');
       await page.goto(ob.test_url);
 
       // Execute code before taking the screenshot
-      if(fs.existsSync('./scripts/preScreenshot.js')) {
-        log.debug('Found ./scripts/preScreenshot.js, invoking execute()');
-        var preScreenshot = require('./scripts/preScreenshot.js');
+      if(fs.existsSync(preScreenshotPath)) {
+        log.debug('Found ' + preScreenshotPath + ', invoking execute()');
+        var preScreenshot = require(preScreenshotPath);
         await preScreenshot.execute(key, page);
       }
 
@@ -132,7 +138,7 @@ const fs = require('fs');
   if (command == 'history') {
     var outputDir = rootDir + '/' + config.history.output;
     if (config.history.output[0] == '/') {
-      outputDir = '.' + config.history.output;
+      outputDir =  process.cwd() + config.history.output;
     }
     var items = new Map();
     Object.keys(config.history.links).forEach(function(key) {
