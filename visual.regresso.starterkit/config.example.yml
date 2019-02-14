@@ -1,9 +1,9 @@
 compare:
   # Output dir, absolute or relative to current dir
-  output: shots
+  output: /shots
   # Scripts dir, absolute or relative to current dir
-  scripts: scripts
-  # Path to binary compare from ImageMagick package
+  scripts: /scripts
+  # Path to binary compare from ImageMagick package, in some cases /usr/local/bin/compare
   compare_binary: /usr/bin/compare
   keep_identical_diff: False
   # Default screenshot size
@@ -11,6 +11,8 @@ compare:
   # https://stackoverflow.com/questions/25490332/lodepng-crashes-when-encoding-png-files-with-size-greater-than-15000-15000-pix
   screen_size:
     - "1300x3000"
+  # Default screenshot timeout
+  screenshot_timeout: 1000
   # Prod and test site URLs
   url:
     prod: https://www.worldheritageoutlook.iucn.org
@@ -26,6 +28,7 @@ compare:
       path: /explore-sites/wdpaid/191
       screen_size:
         - "1280x14000"
+      screenshot_timeout: 2000
 
 history:
   output: history

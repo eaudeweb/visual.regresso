@@ -27,15 +27,18 @@ const fs = require('fs');
 
   var rootDir = path.dirname(require.main.filename);
   if (command == 'compare') {
+    var defaultTimeout = typeof(config.compare.screenshot_timeout) != 'undefined' && typeof(config.compare.screenshot_timeout) == 'number' ? config.compare.screenshot_timeout : 1000;
     var outputDir = rootDir + '/' + config.compare.output;
     if (config.compare.output[0] == '/') {
       outputDir = process.cwd() + config.compare.output;
     }
+
     var items = new Map();
     Object.keys(config.compare.links).forEach(function(key) {
       let value = config.compare.links[key];
       let path = typeof(value) == 'string' ? config.compare.links[key] : value.path;
       let screenSize = typeof(value.screen_size) == 'object' && typeof(value.screen_size[0]) == 'string' ? parseScreenSize(value.screen_size[0]) : defaultScreenSize;
+      let timeout = typeof(value.screenshot_timeout) != 'undefined' && typeof(value.screenshot_timeout) == 'number' ? value.screenshot_timeout : defaultTimeout;
 
       items.set(key, {
         "prod_url": config.compare.url.prod + path,
@@ -45,6 +48,7 @@ const fs = require('fs');
         "diff_image": outputDir + '/diff/' + key + '_diff.png',
         "screen_width" : screenSize.width,
         "screen_height" : screenSize.height,
+        "timeout": timeout,
       });
     });
 
@@ -72,7 +76,7 @@ const fs = require('fs');
       if(fs.existsSync(preScreenshotPath)) {
         log.debug('Found ' + preScreenshotPath + ', invoking execute()');
         var preScreenshot = require(preScreenshotPath);
-        await preScreenshot.execute(key, page);
+        await preScreenshot.execute(key, page, ob.timeout);
       }
 
       await page.screenshot({path: ob.prod_image});
@@ -87,7 +91,7 @@ const fs = require('fs');
       if(fs.existsSync(preScreenshotPath)) {
         log.debug('Found ' + preScreenshotPath + ', invoking execute()');
         var preScreenshot = require(preScreenshotPath);
-        await preScreenshot.execute(key, page);
+        await preScreenshot.execute(key, page, ob.timeout);
       }
 
       await page.screenshot({path: ob.test_image});
