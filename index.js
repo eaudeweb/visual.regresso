@@ -76,10 +76,15 @@ const fs = require('fs');
       if(fs.existsSync(preScreenshotPath)) {
         log.debug('Found ' + preScreenshotPath + ', invoking execute()');
         var preScreenshot = require(preScreenshotPath);
-        await preScreenshot.execute(key, page, ob.timeout);
+        await preScreenshot.execute(key, page);
       }
 
+      // Wait before taking screenshot
+      log.debug('Waiting for %dms before screenshot...', ob.timeout);
+      await page.waitFor(ob.timeout);
+
       await page.screenshot({path: ob.prod_image});
+      log.debug('Done getting PROD screenshot.');
 
       var page = await browser.newPage();
       page.setViewport({width: screen_width, height: screen_height});
@@ -91,10 +96,15 @@ const fs = require('fs');
       if(fs.existsSync(preScreenshotPath)) {
         log.debug('Found ' + preScreenshotPath + ', invoking execute()');
         var preScreenshot = require(preScreenshotPath);
-        await preScreenshot.execute(key, page, ob.timeout);
+        await preScreenshot.execute(key, page);
       }
 
+      // Wait before taking screenshot
+      log.debug('Waiting for %dms before screenshot...', ob.timeout);
+      await page.waitFor(ob.timeout);
+
       await page.screenshot({path: ob.test_image});
+      log.debug('Done getting TEST screenshot.');
       await browser.close();
 
       const { spawnSync} = require('child_process');
@@ -182,7 +192,9 @@ const fs = require('fs');
       await browser.close();
     }
   }
+
   log.info('Done with exit code: ' + exit_code);
+
   process.exit(exit_code);
 })();
 

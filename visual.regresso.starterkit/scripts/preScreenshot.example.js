@@ -3,19 +3,20 @@ exports.execute = execute;
 /**
  * @param id - currently executing page key
  * @param page - browser page object
- * @param timeout - screenshot_timeout for currently executing page
  */
-async function execute(id, page, timeout) {
+async function execute(id, page) {
   if (id == 'homepage') {
     return;
   }
+  await page.evaluate(() => {
+    let element = document.querySelector('a[href="#full-assessment"]');
+    if(element != null) {
+      element.click();
+    }
 
-  if (element = await page.$('a[href="#full-assessment"]')) {
-    await element.click();
-    await page.waitFor(timeout);
-  }
-  if (element = await page.$('.expand-button')) {
-      await element.click();
-    await page.waitFor(timeout);
-  }
+    element = document.querySelector('.expand-button');
+    if(element != null) {
+      element.click();
+    }
+  });
 }
