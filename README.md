@@ -7,8 +7,9 @@
   - `git clone git@github.com:eaudeweb/visual.regresso.git`
   - `cd visual.regresso`
   - `npm install`
-4. Create an alias in `.bashrc` for **index.js** file from the cloned **visual.regresso** directory
+4. Create an alias in `$HOME/.bashrc` for **index.js** file from the cloned **visual.regresso** directory
   - `alias visual-regresso='DEBUG_LEVEL=INFO path_to_visual.regresso/index.js'`
+  - `source $HOME/.bashrc`
 5. Copy the folder `visual.regresso.starterkit` into your project, rename it as preferred and navigate into it.
 6. Copy `config.example.yml` to `config.yml` and customise as necessary.
 
