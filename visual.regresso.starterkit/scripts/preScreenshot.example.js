@@ -8,13 +8,15 @@ async function execute(id, page) {
   if (id == 'homepage') {
     return;
   }
+  await page.evaluate(() => {
+    let element = document.querySelector('a[href="#full-assessment"]');
+    if(element != null) {
+      element.click();
+    }
 
-  if (element = await page.$('a[href="#full-assessment"]')) {
-    await element.click();
-    await page.waitFor(500);
-  }
-  if (element = await page.$('.expand-button')) {
-      await element.click();
-    await page.waitFor(1300);
-  }
+    element = document.querySelector('.expand-button');
+    if(element != null) {
+      element.click();
+    }
+  });
 }
