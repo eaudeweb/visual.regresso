@@ -1,6 +1,0 @@
-shots/*.png
-shots/diff/*.png
-config.yml
-node_modules/
-history
-scripts/preScreenshot.js
