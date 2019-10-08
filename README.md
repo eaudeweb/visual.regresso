@@ -1,35 +1,38 @@
-
 # Install
 
 1. Install ImageMagick (https://imagemagick.org/script/download.php) to make **compare** command line available
 2. Install node (>= 8.10.0) and npm (>= 3.5.2).
 3. Clone the project and install dependencies
-  - `git clone git@github.com:eaudeweb/visual.regresso.git`
-  - `cd visual.regresso`
-  - `npm install`
-4. Create an alias in `$HOME/.bashrc` for **index.js** file from the cloned **visual.regresso** directory
-  - `alias visual-regresso='DEBUG_LEVEL=INFO path_to_visual.regresso/index.js'`
-  - `source $HOME/.bashrc`
-5. Copy the folder `visual.regresso.starterkit` into your project, rename it as preferred and navigate into it.
-6. Copy `config.example.yml` to `config.yml` and customise as necessary.
 
+```
+git clone git@github.com:eaudeweb/visual.regresso.git
+cd visual.regresso
+npm install
+```
+
+4. Copy `example.config.yml` to `config.yml` and add the URLs according to provided examples
 
 # Usage
 
 ## Taking comparison screenshots
 
-Inside your project's **visual.regresso** folder
-  - `visual-regresso compare`
+The tool will save the screenshots inside the `shots` folder and differences - if any - in `shots/diff` folder. You can also analyze the logs to view failed comparisons.
+
+```
+	DEBUG_LEVEL=INFO index.js compare
+```
 
 ## Taking historical screenshots
 
-Inside your project's **visual.regresso** folder
-  - `visual-regresso history`
+The tool will save the screenshots inside the `history` folder.
 
-## Executing code before taking a screenshot
+```
+	DEBUG_LEVEL=INFO index.js history
+```
 
-Copy `scripts/preScreenshot.example.js` to `scripts/preScreenshot.js` in your project's **visual.regresso** folder and add your custom interaction code in the `execute` function.
+## Customizing code to execute tasks before taking a screenshot.
 
+The tool supports to customize the page before taking a screenshot. For example you can stop animations, remove maps, slideshows or other elements that could trigger false positive comparisons. To do that, copy `scripts/preScreenshot.example.js` to `scripts/preScreenshot.js` and customize according to examples provided. The script will be executed for each item before the screenshot is made.
 
 # References
 
