@@ -7,6 +7,7 @@ const sprintfjs = require('sprintf-js');
 const sprintf = sprintfjs.sprintf;
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
 
 (async () => {
   var exit_code = 0, command = null, log = new Log('main');
@@ -34,15 +35,15 @@ const fs = require('fs');
     }
 
     var items = new Map();
-    Object.keys(config.compare.links).forEach(function(key) {
-      let value = config.compare.links[key];
-      let path = typeof(value) == 'string' ? config.compare.links[key] : value.path;
+    Object.keys(config.links).forEach(function(key) {
+      let value = config.links[key];
+      let path = typeof(value) == 'string' ? config.links[key] : value.path;
       let screenSize = typeof(value.screen_size) == 'object' && typeof(value.screen_size[0]) == 'string' ? parseScreenSize(value.screen_size[0]) : defaultScreenSize;
       let timeout = typeof(value.screenshot_timeout) != 'undefined' && typeof(value.screenshot_timeout) == 'number' ? value.screenshot_timeout : defaultTimeout;
 
       items.set(key, {
-        "prod_url": config.compare.url.prod + path,
-        "test_url": config.compare.url.test + path,
+        "prod_url": config.url.prod + path,
+        "test_url": config.url.test + path,
         "prod_image": outputDir + '/' + key + '_prod.png',
         "test_image": outputDir + '/' + key + '_test.png',
         "diff_image": outputDir + '/diff/' + key + '_diff.png',
@@ -154,22 +155,28 @@ const fs = require('fs');
     if (config.history.output[0] == '/') {
       outputDir =  process.cwd() + config.history.output;
     }
+    var defaultScreenSize = null;
+    if (typeof(config.compare.screen_size) != 'undefined' && typeof(config.compare.screen_size[0] == 'string')) {
+      defaultScreenSize = parseScreenSize(config.compare.screen_size[0]);
+    }
+    // console.log(util.inspect(defaultScreenSize, {showHidden: false, depth: null}))
     var items = new Map();
-    Object.keys(config.history.links).forEach(function(key) {
-      var path = config.history.links[key];
-      var prod_site = config.history.url;
+    Object.keys(config.links).forEach(function(key) {
+      let value = config.links[key];
+      let path = typeof(value) == 'string' ? config.links[key] : value.path;
+      let prod_site = config.url.prod;
       items.set(key, {
         "prod_url": prod_site + path,
         "prod_image": outputDir + '/' + key + '.png',
       });
     });
+    // console.log(util.inspect(items, {showHidden: false, depth: null}))
 
     for (var item of items.entries()) {
       var key = item[0], ob = item[1];
       var element;
-      var screen_width = 1280;
-      var screen_height = 15000;
-
+      var screen_width = defaultScreenSize.width;
+      var screen_height = defaultScreenSize.height;
       const browser = await puppeteer.launch();
       var page = await browser.newPage();
       page.setViewport({width: screen_width, height: screen_height});

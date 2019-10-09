@@ -13,27 +13,25 @@ compare:
     - "1300x3000"
   # Default screenshot timeout
   screenshot_timeout: 1000
-  # Prod and test site URLs
-  url:
-    prod: https://www.worldheritageoutlook.iucn.org
-    test: https://iucn-who.edw.ro
-  # Pages to be compared
-  links:
-    explore_sites: /explore-sites
-    homepage:
-      path: /
-      screen_size:
-        - "1280x1024"
-    site_191:
-      path: /explore-sites/wdpaid/191
-      screen_size:
-        - "1280x14000"
-      screenshot_timeout: 2000
-
 history:
+  screen_size:
+    - "1280x1300"
   output: history
-  url:    https://www.worldheritageoutlook.iucn.org
-  links:
-    homepage: /
-    about: /about
-    site_191: /explore-sites/wdpaid/191
+
+# Links to websites (test and prod). Prod URL is also used for history
+url:
+  prod: https://msp-platform.eu
+  test: http://msp.test
+
+# Pages to be compared
+links:
+  homepage:
+    path: /
+    screen_size:
+      - "1280x1024"
+  site_191:
+    path: /explore-sites/wdpaid/191
+    screen_size:
+      - "1280x14000"
+    screenshot_timeout: 2000
+  explore_sites: /explore-sites
