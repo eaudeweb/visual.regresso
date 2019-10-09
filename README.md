@@ -10,7 +10,7 @@ cd visual.regresso
 npm install
 ```
 
-4. Copy `example.config.yml` to `config.yml` and add the URLs according to provided examples
+4. Copy `example.config.yml` to `config.yml` and add configure according to provided examples: URLs, screen resolutions, output folders etc.
 
 # Usage
 
@@ -18,16 +18,18 @@ npm install
 
 The tool will save the screenshots inside the `shots` folder and differences - if any - in `shots/diff` folder. You can also analyze the logs to view failed comparisons.
 
+`DEBUG_LEVEL` - DEBUG, INFO, WARN, ERROR
+
 ```
 	DEBUG_LEVEL=INFO index.js compare
 ```
 
 ## Taking historical screenshots
 
-The tool will save the screenshots inside the `history` folder.
+The tool will save the screenshots inside the `history` folder by default.
 
 ```
-	DEBUG_LEVEL=INFO index.js history
+	DEBUG_LEVEL=DEBUG index.js history
 ```
 
 ## Customizing code to execute tasks before taking a screenshot.
