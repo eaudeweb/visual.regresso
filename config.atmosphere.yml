@@ -16,21 +16,14 @@ compare:
 history:
   screen_size:
     - "1280x1300"
+  output: history
 
 # Links to websites (test and prod). Prod URL is also used for history
 url:
-  prod: https://msp-platform.eu
-  test: http://msp.test
+  prod: https://climate.copernicus.eu
+  test: https://www.google.com/
 
 # Pages to be compared
 links:
-  homepage:
-    path: /
-    screen_size:
-      - "1280x1024"
-  site_191:
-    path: /explore-sites/wdpaid/191
-    screen_size:
-      - "1280x14000"
-    screenshot_timeout: 2000
-  explore_sites: /explore-sites
+  homepage: /
+  node_479_en: /1st-artificial-intelligence-copernicus-workshop
