@@ -20,8 +20,8 @@ history:
 
 # Links to websites (test and prod). Prod URL is also used for history
 url:
-  prod: https://msp-platform.eu
-  test: http://msp.test
+  prod: https://user:pass@www.msp-platform.eu
+  test: http://user:pass@test.msp-platform.eu
 
 # Pages to be compared
 links:
